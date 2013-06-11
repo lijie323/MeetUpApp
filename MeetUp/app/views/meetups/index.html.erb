@@ -1,0 +1,32 @@
+<h1>Listing meetups</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Time</th>
+    <th>Discription</th>
+    <th>Location</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @meetups.each do |meetup| %>
+  <tr>
+    <td><%= meetup.title %></td>
+    <td><%= meetup.time %></td>
+    <td><%= meetup.discription %></td>
+    <td><%= meetup.location %></td>
+    <td><%= link_to 'Show', meetup %></td>
+    <% @group = Group.find(meetup.group_id)%>
+    <%if ( @group.user_id == session[:user_id]) %>
+    <td><%= link_to 'Edit', edit_meetup_path(meetup) %></td>
+    <td><%= link_to 'Destroy', meetup, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <%end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Meetup', new_meetup_path %>

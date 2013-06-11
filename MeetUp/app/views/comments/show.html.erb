@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Content:</b>
+  <%= @comment.content %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= User.find(@comment.user_id).name%>
+</p>
+
+<p>
+  <b>Meetup:</b>
+  <%= @comment.meetup_id %>
+</p>
+
+<% if session[:user_id]==1||session[:user_id]==@comment.user_id%>
+  <%= link_to 'Edit', edit_comment_path(@comment) %> |
+<% end %>
+<%= link_to 'continue',"/meetups/#{params[:mid]}"%>

@@ -1,0 +1,14 @@
+<html>
+<h1>New group Step 2</h1>
+<h2>Choose topic for your group</h2>
+
+<form action = <%="/groups/addtopic?gid=#{@group.id}"%> method="post" >
+<% @topics.each do |topic| %>
+    <%= check_box_tag "topic[]", topic.id%>
+    <%= topic.id %>:<%= topic.name%><br>
+<% end %>
+<%= tag(:input, :type => "hidden", :name =>request_forgery_protection_token.to_s, :value =>form_authenticity_token)
+%>
+<input type="submit" value="submit">
+</form>
+

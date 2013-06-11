@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= image_tag @user.image_url , :height =>100, :width=>100 if @user.image? %>
+</p>
+<p>
+  <b>Name:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Age:</b>
+  <%= @user.age %>
+</p>
+
+<p>
+  <b>Gender:</b>
+  <%= @user.gender %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @user.country %>
+</p>
+
+<p>
+  <b>Zip:</b>
+  <%= @user.zip %>
+</p>
+<% @cuser = User.find(session[:user_id])%>
+<% if @cuser.name == "Admin"%>
+  <%= link_to 'Continue', users_url %>
+<% else %>
+  <%= link_to 'Continue', root_url %>
+<% end%>
+
+<% if (session[:user_id] != nil) && (@user.id == session[:user_id])%>
+ | <%= link_to 'Edit', edit_user_path(@user) %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Groups</th>
+  </tr>
+  <% @group.each do |g|%>
+    <% @gr = Group.find(g.group_id)%>
+    <tr>
+      <td><%= @gr.name%></td>
+    </tr>
+    <%end%>
+</table>
+
+
+

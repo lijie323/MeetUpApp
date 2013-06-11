@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @group.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @group.description %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @group.country %>
+</p>
+
+<p>
+  <b>Zip:</b>
+  <%= @group.zip %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= Membership.where(:group_id => @group.id).count%>
+</p>
+<%= link_to "Back", "/groups" %>
+<% if (session[:user_id] != nil) %>
+  <% @ex = Membership.where("group_id=? AND user_id=?",@group.id,session[:user_id])%>
+  <% if @ex.present? %>
+    | <%= link_to 'Quit the Group',"/groups/destroy?gid=#{@group.id}"%>
+  <% else %>
+    | <%= link_to 'Join the Group',"/groups/join?gid=#{@group.id}"%>
+  <% end %>
+  <%if (@group.user_id == session[:user_id]) %>
+    | <%= link_to 'New Meetups',"/meetups/new?gid=#{@group.id}" %>
+    | <%= link_to 'Edit', edit_group_path(@group) %>
+  <%end%>
+<%end%>
+
+<table>
+  <tr>
+    <th>Meetup</th>
+    <th>Time</th>
+    <th>Description</th>
+  </tr>
+<% @meetups.each do |meetup| %>
+  <tr>
+    <td><%= meetup.title %></td>
+    <td><%= meetup.time %></td>
+    <td><%= meetup.discription %></td>
+    <td><%= link_to 'Show', meetup%>
+    <td><% @group_id = meetup.group_id %></td>
+
+  </tr>
+<% end%>
+</table>

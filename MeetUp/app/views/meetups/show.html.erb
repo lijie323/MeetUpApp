@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @meetup.title %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @meetup.time %>
+</p>
+
+<p>
+  <b>Discription:</b>
+  <%= @meetup.discription %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @meetup.location %>
+</p>
+
+<%= link_to "Back", "/groups/#{@meetup.group_id}" %>
+<% @ex = Membership.where("group_id=? AND user_id=?",@meetup.group_id,session[:user_id])%>
+<% @group = Group.find(@meetup.group_id)%>
+
+<% if @ex.present? || @group.user_id == session[:user_id]%>
+  | <%= link_to 'Make a comment',"/comments/new?mid=#{@meetup.id}"%>
+<% end %>
+<% if @group.user_id == session[:user_id]%>
+  | <%= link_to 'Edit', "/meetups/#{@meetup.id}/edit?gid=#{@meetup.group_id}" %>
+<%end%>
+
+<% @comments = Comment.where("meetup_id=?",@meetup.id ) %>
+<% @comments.each do |comment|%>
+<% @user = User.find(comment.user_id)%>
+<p>
+  <%= image_tag @user.image_url, :height =>30, :width=>30 if @user.image?%>
+  <b><%= @user.name%>:</b><br />
+  <%= comment.content%>
+</p>
+<%end%>
+

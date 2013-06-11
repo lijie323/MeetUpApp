@@ -1,0 +1,36 @@
+<h1>Meetup groups</h1>
+
+
+<% @groups.each do |group| %>
+
+
+  <p>
+    <h4><%= group.name %></h4>
+    <%= link_to 'Show', group %>
+    <% if ((session[:user_id] != nil) && (group.user_id == session[:user_id]))||(session[:user_id]==1)%>
+        <%= link_to 'Edit', edit_group_path(group) %>
+        <%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+    <br />
+<table>
+    <tr>
+    <td><b>Topics:</b></td>
+    <% @topics = GroupWithTopic.where("group_id = ?", group.id) %>
+    <% @topics.each do |t|%>
+        <% @to = Topic.find(t.topic_id)%>
+        <td><%= @to.name%></td>
+    <%end%>
+    </tr>
+</table>
+
+    <b>Description:</b><%= group.description %>
+    <br />
+    <br />
+  </p>
+<% end %>
+
+
+<br />
+<% if (session[:user_id] != nil) %>
+<%= link_to 'New Group', new_group_path %>
+<% end %>

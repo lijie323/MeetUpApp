@@ -1,0 +1,20 @@
+<h1>Search result for: <%= @key%><h2>
+<% if @GwithT.present? %>
+<%  @GwithT.each do |f| %>
+  <% @group = Group.find(f.group_id)%>
+  <p>
+    <b><%= @group.name %></b><%= link_to 'Show', @group %><br />
+    <%= @group.description %>
+    <br />
+  </p>
+<%end%>
+<%end%>
+<%if @GwithN.present?%>
+<%  @GwithN.each do |f| %>
+  <p>
+    <b><%= f.name %></b><%= link_to 'Show', f %><br />
+    <%= f.description %>
+    <br />
+  </p>
+<%end%>
+<%end%>
